@@ -18,7 +18,6 @@ const Navbar = () => {
       <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
         Recipe-App
       </Typography>
-      {/* <Button color="inherit">Login</Button> */}
     </Toolbar>
   </AppBar>
   </div>

@@ -1,27 +1,69 @@
-import { Height } from "@mui/icons-material";
-import { Card, CardContent, CardMedia, Container,Grid,TextField, Typography } from "@mui/material";
-import React from "react";
+import {
+  Card,
+  CardContent,
+  CardMedia,
+  Container,
+  Grid,
+  TextField,
+  Typography,
+  CardActionArea,
+} from "@mui/material";
 
-const Recipes = () => {
+import { useEffect, useState } from "react";
+
+export default function Recipes() {
+const [recipes, setRecipes] = useState([]);
+
+const getRecipes =() => {
+    // prepare URL
+    const url = new URL ("https://api.spoonacular.com/recipes/complexSearch");
+    url.searchParams.append('apiKey','090e46a370754d5abffbbdf69984c77f');
+    
+    // fetch recipes from API 
+    fetch(url)
+    
+    .then(response => response.json())
+    .then (data => {
+        //update recipes state
+        setRecipes(data.results);
+
+        // console.log(data);
+    })
+   .catch(error => {
+    console.log(error);
+   }
+    )
+}  
+ useEffect(getRecipes,[]);
+
   return (
-    <Container sx={{my:'2rem'}} maxWidth="sm">
-      <TextField  fullWidth id="outlined-basic" label="Enter a password to search recipes and hit enter" variant="outlined" />
-      <Grid container spacing={3}>
-        <Grid item xs={4}>
-          <Card>
-            <CardMedia  
-            component='img'
-             height='200'
-            image="https://images.unsplash.com/photo-1698309377471-54a87740d979?q=80&w=1634&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            />
+    <Container sx={{ my: "2rem" }}>
+      <TextField
+        fullWidth
+        id="outlined-basic"
+        label="Enter a keyword to search Recipes and press enter"
+        variant="outlined"
+      />
+
+      <Grid sx={{ mt: "1rem" }} container spacing={3}>
+        {recipes.map(recipe=>(<Grid key={recipe.id} item xs={4}>
+          <Card sx={{ maxWidth: 345,height:"100%" }}>
+            <CardActionArea sx={{height:"100%"}}>
+              <CardMedia
+                component="img"
+                height="140"
+                image={recipe.image}
+                alt={recipe.title}
+              />
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  {recipe.title}
+                </Typography>
+              </CardContent>
+            </CardActionArea>
           </Card>
-          <CardContent>
-            <Typography variant="hs" >Jollof and Chicken</Typography>
-          </CardContent>
-        </Grid>
+        </Grid>))}
       </Grid>
     </Container>
   );
-};
-
-export default Recipes;
+}
