@@ -20,7 +20,8 @@ const [loading,setLoading] = useState(false);
 const getRecipes =() => {
       setLoading(true)
     // prepare URL
-    const url = new URL ("https://api.spoonacular.com/recipes/complexSearch");
+    // const url = new URL ("https://api.spoonacular.com/recipes/complexSearch");
+    const url = new URL ("http://localhost:4000/recipes");
     url.searchParams.append('apiKey',process.env.REACT_APP_SPOONACULAR_API_KEY);
     url.searchParams.append('query',keyword);
     
@@ -30,7 +31,9 @@ const getRecipes =() => {
     .then(response => response.json())
     .then (data => {
         //update recipes state
-        setRecipes(data.results);
+        // setRecipes(data.results);
+        setRecipes(data);
+
 
         // console.log(data);
     })
