@@ -1,5 +1,5 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import Navbar from "./Components/Navbar";
+
 import Recipe from "./Pages/recipe";
 import Recipes from "./Pages/recipes";
 import AddRecipe from "./Pages/add-recipe";
@@ -13,12 +13,9 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return (
-    <>
-      <Navbar />
-      <RouterProvider router={router} />
-    </>
-  );
+  return  <RouterProvider router={router} />
+  
+  
 }
 
 export default App;
